@@ -50,9 +50,10 @@ class ShardReader(SubprocessLoop):
                 # until we complete a successful get_records call
                 loop_status = min((
                     30,
-                    (self.retries or 1) * 2
+                    (self.retries * 2) or 1
                 ))
                 log.debug("Retrying get_records (#%d %ds): %s", self.retries+1, loop_status, exc)
+                self.retries += 1
             else:
                 log.error("Client error occurred while reading: %s", exc)
                 loop_status = False
