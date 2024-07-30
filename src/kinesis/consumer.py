@@ -70,6 +70,8 @@ class ShardReader(SubprocessLoop):
 
     def end(self):
         """End of the main loop"""
+        self.record_queue.cancel_join_thread()
+        self.error_queue.cancel_join_thread()
         log.info("Shard reader for %s stoping", self.shard_id)
 
 
